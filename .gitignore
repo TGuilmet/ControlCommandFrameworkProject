@@ -1,0 +1,22 @@
+# ===== Compilation C =====
+*.o
+*.out
+*.exe
+*.a
+*.so
+
+# ===== Dossiers de build =====
+build/
+bin/
+
+# ===== Fichiers temporaires =====
+*.log
+*.tmp
+*.cache
+
+# ===== VS Code =====
+.vscode/
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
