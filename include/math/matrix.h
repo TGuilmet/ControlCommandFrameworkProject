@@ -13,27 +13,27 @@ typedef struct {
 } matrix_t;
 
 //Constructor
-int construct_matrix(matrix_t *m, size_t rows, size_t cols);
+int matrix_construct(matrix_t *m, size_t rows, size_t cols);
 
 //Descructor
-void free_matrix(matrix_t *m);
+void matrix_free(matrix_t *m);
 
 // Copy
-void copy_matrix(matrix_t*R, matrix_t *m);
+void matrix_copy(matrix_t*R, const matrix_t *m);
 
 // Acces to element (i,j)
-double get_value_matrix(const matrix_t *m, size_t i, size_t j);
+double matrix_get(const matrix_t *m, size_t i, size_t j);
 
 // Set element (i,j)
-void set_value_matrix(matrix_t *m, size_t i, size_t j, double value);
+void matrix_set(matrix_t *m, size_t i, size_t j, double value);
 
 // Addition of matrices
-int add_matrix(matrix_t *R, matrix_t *A, const matrix_t *B);
+int matrix_add(matrix_t *R, const matrix_t *A, const matrix_t *B);
 
 // Multiply by a scalar
-void scale_matrix(matrix_t *m, double k);
+void matrix_scale(matrix_t *m, double k);
 
 //Multiply two matrices
-int multiply(matrix_t *R, matrix_t *A, matrix_t *B);
+int matrix_multiply(matrix_t *R, const matrix_t *A, const matrix_t *B);
 
 #endif
