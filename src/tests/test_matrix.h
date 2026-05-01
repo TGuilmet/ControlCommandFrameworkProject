@@ -12,7 +12,7 @@ int test_matrix_free();
 
 int test_matrix_get();
 
-int test_matrix_get_macro();
+int test_matrix_macro();
 
 int test_matrix_set();
 

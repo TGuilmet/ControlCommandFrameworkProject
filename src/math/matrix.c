@@ -50,14 +50,32 @@ int matrix_clone(matrix_t *R, const matrix_t *m){
 
 };
 
-// Acces to element (i,j)
-double matrix_get(const matrix_t *m, size_t i, size_t j){
+// Acces to element (i,j) with check
+int matrix_get(const matrix_t *m, size_t i, size_t j, double *out){
 
+    if (m== NULL || out == NULL)
+        return MATRIX_ERROR;
+    
+    if (i>=m->rows || j >= m->cols)
+        return MATRIX_ERROR;
+        
+    *out = m->data[(i) * (m)->cols + (j)];
+
+    return MATRIX_SUCCESS;
 };
 
-// Set element (i,j)
-void matrix_set(matrix_t *m, size_t i, size_t j, double value){
+// Set element (i,j) with size check
+int matrix_set(matrix_t *m, size_t i, size_t j, double value){
 
+       if (m== NULL)
+        return MATRIX_ERROR;
+    
+    if (i>=m->rows || j >= m->cols)
+        return MATRIX_ERROR;
+        
+    m->data[(i) * (m)->cols + (j)] = value;
+
+    return MATRIX_SUCCESS;
 };
 
 // Addition of matrices

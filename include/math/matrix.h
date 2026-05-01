@@ -31,8 +31,8 @@ int matrix_clone(matrix_t *R, const matrix_t *m);
 // Acces to element (i,j) with error check
 int matrix_get(const matrix_t *m, size_t i, size_t j, double *out);
 
-// Set element (i,j)
-void matrix_set(matrix_t *m, size_t i, size_t j, double value);
+// Set element (i,j) with error check
+int matrix_set(matrix_t *m, size_t i, size_t j, double value);
 
 // Addition of matrices
 // R should always be different from A and B
