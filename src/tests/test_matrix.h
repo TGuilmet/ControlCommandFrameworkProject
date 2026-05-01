@@ -1,6 +1,7 @@
 #ifndef TEST_MATRIX_H
 #define TEST_MATRIX_H
 
+#include <stdio.h>;
 #include "math/matrix.h"
 
 int run_matrix_tests();

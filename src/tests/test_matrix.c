@@ -1,8 +1,45 @@
 #include "test_matrix.h"
 
-int run_matrix_tests();
+//
+#define RUN_TEST(test) \
+    if (!(test())) { \
+        printf("%s failed\n", #test); \
+        success = 0; \
+    } else { \
+        printf("%s passed\n", #test); \
+    }
 
-int test_matrix_constructor();
+int run_matrix_tests(){
+    int success = 1;
+
+    RUN_TEST(test_matrix_constructor);
+
+    return success ? 0 : 1;
+};
+
+int test_matrix_constructor(){
+    // matrix declaration
+    matrix_t m;
+
+    // construction of a matrix of size 2,3
+    if (matrix_construct(&m, 2, 3) != MATRIX_SUCCESS)
+        return 0;
+
+    // size check
+    if (m.rows != 2 || m.cols != 3)
+        return 0;
+
+    // 0 initialization check
+    for (size_t i = 0; i < m.rows; i++) {
+        for (size_t j = 0; j < m.cols; j++) {
+            if (matrix_get(&m, i, j) != 0.0)
+                return 0;
+        }
+    }
+
+    matrix_free(&m);
+    return 1;
+};
 
 int test_matrix_free();
 

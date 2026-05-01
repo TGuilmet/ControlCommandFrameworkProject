@@ -28,8 +28,8 @@ int matrix_copy(matrix_t *R, const matrix_t *m);
 //R should always be different from m
 int matrix_clone(matrix_t *R, const matrix_t *m);
 
-// Acces to element (i,j)
-double matrix_get(const matrix_t *m, size_t i, size_t j);
+// Acces to element (i,j) with error check
+int matrix_get(const matrix_t *m, size_t i, size_t j, double *out);
 
 // Set element (i,j)
 void matrix_set(matrix_t *m, size_t i, size_t j, double value);

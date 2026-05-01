@@ -25,6 +25,17 @@ int matrix_construct(matrix_t *m, size_t rows, size_t cols){
 //Descructor
 void matrix_free(matrix_t *m){
 
+    // check if m is not a NULL pointer
+    if (m==NULL)
+        return;
+        
+    // free memory
+    free(m->data);
+
+    // default structure for empty matrix
+    m->data = NULL;
+    m->rows = 0;
+    m->cols = 0;
 };
 
 // Copy a matrix but size should be equal
