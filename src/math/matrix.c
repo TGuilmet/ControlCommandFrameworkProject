@@ -1,9 +1,25 @@
-#include <matrix.h>
+#include "math/matrix.h"
 
 //Constructor
 int matrix_construct(matrix_t *m, size_t rows, size_t cols){
-    
 
+        // if empty pointer or rows or cols are 0, return an error
+        if (m == NULL || rows == 0 || cols == 0)
+            return MATRIX_ERROR;
+
+        // default structure with NULL pointer in data
+        // if calloc fails
+        m->rows = rows;
+        m->cols = cols;
+        m->data = NULL;
+
+        //initialize with zeros
+        m->data = calloc(rows * cols, sizeof(double));
+
+        if (m->data == NULL)
+            return MATRIX_ERROR;
+
+    return MATRIX_SUCCESS;
 };
 
 //Descructor

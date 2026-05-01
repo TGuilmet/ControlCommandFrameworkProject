@@ -1,7 +1,7 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-#include <common.h>
+#include "common.h"
 
 #define MATRIX_SUCCESS 0
 #define MATRIX_ERROR -1
