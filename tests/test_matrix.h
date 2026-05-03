@@ -26,4 +26,8 @@ int test_matrix_scale();
 
 int test_matrix_multiply();
 
+int test_matrix_transpose();
+
+int matrix_compare();
+
 #endif

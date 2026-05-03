@@ -126,12 +126,75 @@ int test_matrix_set(){
     return (val == 9.0 && get_succes);
 };
 
-int test_matrix_copy();
+int test_matrix_copy(){
+    matrix_t R1;
+    matrix_t R2;
+    matrix_t m;
 
-int test_matrix_clone();
+    matrix_construct(&R1,3,3);
+    matrix_construct(&R2,2,2);
+    matrix_construct(&m,2,2);
 
-int test_matrix_add();
+    if (matrix_copy(&R1,&m) != MATRIX_ERROR)
+        return 0;
 
-int test_matrix_scale();
+    if (matrix_copy(&R2,&m) != MATRIX_SUCCESS)
+        return 0;
 
-int test_matrix_multiply();
+    int result = matrix_compare(&R2,&m);
+
+    matrix_free(&m);
+    matrix_free(&R1);
+    matrix_free(&R2);
+
+    return result;
+};
+
+int test_matrix_clone(){
+
+    matrix_t R1;
+    matrix_t R2;
+    matrix_t m;
+
+    matrix_construct(&R1,3,3);
+    matrix_construct(&R2,1,1);
+    matrix_construct(&m,2,2);
+
+    if (matrix_clone(&R1,&m) != MATRIX_SUCCESS)
+        return 0;
+
+    if (matrix_clone(&R2,&m) != MATRIX_SUCCESS)
+        return 0;
+
+    if (matrix_clone(&R1,&R2) != MATRIX_SUCCESS)
+        return 0;
+
+    int result = matrix_compare(&m,&R1) && matrix_compare(&m,&R2) && matrix_compare(&R2,&R1);
+
+    matrix_free(&m);
+    matrix_free(&R1);
+    matrix_free(&R2);
+    
+    return result;
+
+};
+
+int test_matrix_add(){
+    return MATRIX_SUCCESS;
+};
+
+int test_matrix_scale(){
+    return MATRIX_SUCCESS;
+};
+
+int test_matrix_multiply(){
+    return MATRIX_SUCCESS;
+};
+
+int test_matrix_transpose(){
+    return MATRIX_SUCCESS;
+};
+
+int matrix_compare(){
+
+}

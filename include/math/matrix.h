@@ -51,4 +51,5 @@ int matrix_multiply(matrix_t *R, const matrix_t *A, const matrix_t *B);
 // Transpose a matrix
 // R should always be different from A
 int matrix_transpose(matrix_t *R, const matrix_t *m);
+
 #endif

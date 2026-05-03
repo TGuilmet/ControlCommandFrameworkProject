@@ -168,7 +168,7 @@ int matrix_multiply(matrix_t *R, const matrix_t *A, const matrix_t *B){
     
 };
 
-int matrix_transpose (matrix_t *R, matrix_t *m){
+int matrix_transpose (matrix_t *R,const matrix_t *m){
 
     if(R==NULL || m==NULL)
         return MATRIX_ERROR;
