@@ -8,6 +8,9 @@
 
 #define MAT(m,i,j) ((m)->data[(i)*(m)->cols + (j)])
 
+//MAT(&m,i,j) = value   for set 
+//value = MAT(&m,i,j)   for get
+
 typedef struct {
     double *data;
     size_t rows;
@@ -45,4 +48,7 @@ void matrix_scale(matrix_t *m, double k);
 // R should always be different from A and B
 int matrix_multiply(matrix_t *R, const matrix_t *A, const matrix_t *B);
 
+// Transpose a matrix
+// R should always be different from A
+void matrix_transpose(matrix_t *R, const matrix_t *m);
 #endif
