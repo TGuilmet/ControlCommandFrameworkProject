@@ -1,5 +1,4 @@
 #include "math/matrix.h"
-#include "common.h"
 
 //Constructor
 int matrix_construct(matrix_t *m, size_t rows, size_t cols){
@@ -39,9 +38,8 @@ void matrix_free(matrix_t *m){
     m->cols = 0;
 };
 
-// Copy a matrix but size should be equal
+// Hard copy a matrix but size should be equal
 // R should always be different from m
-
 int matrix_copy(matrix_t *R, const matrix_t *m){
     // Check if not NULL pointer
     if (R == NULL || m== NULL)
@@ -52,7 +50,6 @@ int matrix_copy(matrix_t *R, const matrix_t *m){
         return MATRIX_ERROR;
     
     // Replace every value of R by values of m
-    // Maybe R-> data = m->data ??
     for (size_t i=0; i<(m->rows); i++)
         for(size_t j=0; j<(m->cols); j++)
             MAT(R,i,j)=MAT(m,i,j);
@@ -60,19 +57,22 @@ int matrix_copy(matrix_t *R, const matrix_t *m){
     return MATRIX_SUCCESS;
 };
 
-// Copy and reallocate if the size are different.
+//Copy and reallocate if the size are different.
 //R should always be different from m
 int matrix_clone(matrix_t *R, const matrix_t *m){
 
-    if (R == NULL || m== NULL)
+    if (R == NULL || m == NULL)
         return MATRIX_ERROR;
 
-    R->rows = m->rows;
-    R->cols = m->cols;
-    // Or copy (R,m)
     free(R->data);
     R->data = malloc(m->rows * m->cols * sizeof(double));
+
+    if (R->data == NULL)
+            return MATRIX_ERROR;
     
+    R->rows = m->rows;
+    R->cols = m->cols;
+
     for (size_t i=0; i<(m->rows); i++)
         for(size_t j=0; j<(m->cols); j++)
             MAT(R,i,j)=MAT(m,i,j);
@@ -118,11 +118,16 @@ int matrix_add(matrix_t *R, const matrix_t *A, const matrix_t *B){
         return MATRIX_ERROR;
     size_t rows = A->rows;
     size_t cols = A-> cols;
-    R->cols = cols;
-    R->rows = rows;
 
     free(R->data);
+
     R->data = malloc(rows * cols * sizeof(double));
+
+    if (R->data == NULL)
+        return MATRIX_ERROR;
+
+    R->rows = rows;
+    R->cols = cols;
 
     for (size_t i=0; i<rows; i++)
         for(size_t j=0; j<cols; j++)
@@ -132,9 +137,9 @@ int matrix_add(matrix_t *R, const matrix_t *A, const matrix_t *B){
 };
 
 // Multiply by a scalar
-void matrix_scale(matrix_t *m, double k){
+int matrix_scale(matrix_t *m, double k){
 
-    if(m==NULL);
+    if(m==NULL)
         return MATRIX_ERROR;
     
     for (size_t i=0; i<(m->rows); i++)
@@ -148,7 +153,7 @@ void matrix_scale(matrix_t *m, double k){
 // R should always be different from A and B
 int matrix_multiply(matrix_t *R, const matrix_t *A, const matrix_t *B){
 
-    if(A==NULL || B==NULL);
+    if(R==NULL || A==NULL || B==NULL)
         return MATRIX_ERROR;
 
     
@@ -156,7 +161,11 @@ int matrix_multiply(matrix_t *R, const matrix_t *A, const matrix_t *B){
         return MATRIX_ERROR;
 
     free(R->data);
+
     R->data = calloc((A->rows) * (B->cols), sizeof(double));
+
+    if (R->data == NULL)
+        return MATRIX_ERROR;
 
     for (size_t i=0; i<(A->rows); i++)
         for(size_t j=0; j<(B->cols); j++)
@@ -165,8 +174,6 @@ int matrix_multiply(matrix_t *R, const matrix_t *A, const matrix_t *B){
                 MAT(R,i,j)+= MAT(A,i,k)*MAT(B,k,j);
     
     return MATRIX_SUCCESS;
-
-    
 };
 
 int matrix_transpose (matrix_t *R,const matrix_t *m){
@@ -174,11 +181,16 @@ int matrix_transpose (matrix_t *R,const matrix_t *m){
     if(R==NULL || m==NULL)
         return MATRIX_ERROR;
 
-    R->rows = m->cols;
-    R->cols = m->rows;
     free(R->data);
 
     R->data = malloc(R->cols * R->rows * sizeof(double));
+
+    if (R->data == NULL)
+        return MATRIX_ERROR;
+
+    R->rows = m->cols;
+    R->cols = m->rows;
+
     for (size_t i=0; i<(m->rows); i++)
         for(size_t j=0; j<(m->cols); j++)
             MAT(R,j,i) = MAT(m,i,j);
@@ -196,9 +208,8 @@ int matrix_compare(const matrix_t *A, const matrix_t *B){
 
     for (size_t i = 0; i<(A->rows); i++)
         for (size_t j = 0; j<(A->cols); j++)
-            if (MAT(A,i,j)!=MAT(B,i,j))
+            if (fabs(MAT(A,i,j)-MAT(B,i,j))>EPS)
                 return FALSE;
-    
-    return TRUE;
 
+    return TRUE;
 }

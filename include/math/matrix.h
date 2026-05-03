@@ -42,7 +42,7 @@ int matrix_set(matrix_t *m, size_t i, size_t j, double value);
 int matrix_add(matrix_t *R, const matrix_t *A, const matrix_t *B);
 
 // Multiply by a scalar
-void matrix_scale(matrix_t *m, double k);
+int matrix_scale(matrix_t *m, double k);
 
 //Multiply two matrices
 // R should always be different from A and B
@@ -52,5 +52,6 @@ int matrix_multiply(matrix_t *R, const matrix_t *A, const matrix_t *B);
 // R should always be different from A
 int matrix_transpose(matrix_t *R, const matrix_t *m);
 
+// Compare 2 matrices of same size
 int matrix_compare( const matrix_t *A, const matrix_t *B);
 #endif

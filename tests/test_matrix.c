@@ -174,12 +174,14 @@ int test_matrix_clone(){
     matrix_free(&m);
     matrix_free(&R1);
     matrix_free(&R2);
-    
+
     return result;
 
 };
 
 int test_matrix_add(){
+
+
     return MATRIX_SUCCESS;
 };
 
@@ -194,7 +196,3 @@ int test_matrix_multiply(){
 int test_matrix_transpose(){
     return MATRIX_SUCCESS;
 };
-
-int matrix_compare(){
-
-}
