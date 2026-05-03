@@ -15,7 +15,7 @@ int run_matrix_tests(){
     RUN_TEST(test_matrix_constructor);
     RUN_TEST(test_matrix_free);
     RUN_TEST(test_matrix_get);
-    RUN_TEST(test_matrix_set); // TODO
+    RUN_TEST(test_matrix_set);
     RUN_TEST(test_matrix_macro);
 
     return success ? 0 : 1;
@@ -176,17 +176,60 @@ int test_matrix_clone(){
     matrix_free(&R2);
 
     return result;
-
 };
 
 int test_matrix_add(){
 
+    matrix_t m1,m2,m3,m4,R;
 
-    return MATRIX_SUCCESS;
+    matrix_construct(&m1,2,2);
+    matrix_construct(&m2,2,2);
+    matrix_construct(&m3,2,2);
+    matrix_construct(&m4,3,3);
+
+
+    MAT(&m1, 0, 0) = 1.0; MAT(&m1, 0, 1) = 1.0;
+    MAT(&m1, 1, 0) = 1.0; MAT(&m1, 1, 1) = 1.0;
+
+    MAT(&m2, 0, 0) = 2.5; MAT(&m2, 0, 1) = 2.33;
+    MAT(&m2, 1, 0) = 1.0; MAT(&m2, 1, 1) = 1.0;
+
+    MAT(&m3, 0, 0) = 3.5; MAT(&m3, 0, 1) = 3.33;
+    MAT(&m3, 1, 0) = 2.0; MAT(&m3, 1, 1) = 2.0;
+
+    if (matrix_add(&R,&m1,&m4) != MATRIX_ERROR)
+        return 0;
+
+    matrix_add(&R,&m1,&m2);
+    int result = matrix_compare(&R,&m3);
+
+    matrix_free(&m1);matrix_free(&m2);matrix_free(&m3);
+    matrix_free(&m4);matrix_free(&R);
+
+    return result;
 };
 
 int test_matrix_scale(){
     return MATRIX_SUCCESS;
+
+    matrix_t m1,m2;
+
+    matrix_construct(&m1,2,2);
+    matrix_construct(&m2,2,2);
+
+    MAT(&m1, 0, 0) = 1.0; MAT(&m1, 0, 1) = 0.0;
+    MAT(&m1, 1, 0) = 1.5; MAT(&m1, 1, 1) = 1.0;
+
+    MAT(&m2, 0, 0) = 4.0; MAT(&m2, 0, 1) = 0.0;
+    MAT(&m2, 1, 0) = 6.0; MAT(&m2, 1, 1) = 4.0;
+
+    int result = matrix_compare(&m1,&m2);
+
+    matrix_free(&m1);matrix_free(&m1);
+
+    return result;
+
+
 };
 
 int test_matrix_multiply(){

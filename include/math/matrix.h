@@ -28,23 +28,23 @@ void matrix_free(matrix_t *m);
 int matrix_copy(matrix_t *R, const matrix_t *m);
 
 // Copy and reallocate if the size are different.
-//R should always be different from m
+// R should always be different from m
 int matrix_clone(matrix_t *R, const matrix_t *m);
 
-// Acces to element (i,j) with error check
+// Acces to element (i,j) with size check
 int matrix_get(const matrix_t *m, size_t i, size_t j, double *out);
 
-// Set element (i,j) with error check
+// Set element (i,j) with size check
 int matrix_set(matrix_t *m, size_t i, size_t j, double value);
 
-// Addition of matrices
+// Addition of matrices with reallocation
 // R should always be different from A and B
 int matrix_add(matrix_t *R, const matrix_t *A, const matrix_t *B);
 
 // Multiply by a scalar
 int matrix_scale(matrix_t *m, double k);
 
-//Multiply two matrices
+//Multiply two matrices with reallocation
 // R should always be different from A and B
 int matrix_multiply(matrix_t *R, const matrix_t *A, const matrix_t *B);
 
@@ -53,5 +53,6 @@ int matrix_multiply(matrix_t *R, const matrix_t *A, const matrix_t *B);
 int matrix_transpose(matrix_t *R, const matrix_t *m);
 
 // Compare 2 matrices of same size
+// True if every elements are under an EPS difference
 int matrix_compare( const matrix_t *A, const matrix_t *B);
 #endif
