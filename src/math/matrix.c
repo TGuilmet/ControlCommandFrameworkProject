@@ -155,7 +155,7 @@ int matrix_multiply(matrix_t *R, const matrix_t *A, const matrix_t *B){
         return MATRIX_ERROR;
 
     free(R->data);
-    R->data = calloc(A->rows * B->cols * sizeof(double));
+    R->data = calloc((A->rows) * (B->cols), sizeof(double));
 
     for (size_t i=0; i<(A->rows); i++)
         for(size_t j=0; j<(B->cols); j++)
@@ -168,6 +168,19 @@ int matrix_multiply(matrix_t *R, const matrix_t *A, const matrix_t *B){
     
 };
 
-void matrix_transpose (matrix_t *R, matrix_t *m){
+int matrix_transpose (matrix_t *R, matrix_t *m){
+
+    if(R==NULL || m==NULL)
+        return MATRIX_ERROR;
+
+    R->rows = m->cols;
+    R->cols = m->rows;
+    free(R->data);
+
+    R->data = malloc(R->cols * R->rows * sizeof(double));
+    for (size_t i=0; i<(m->rows); i++)
+        for(size_t j=0; j<(m->cols); j++)
+            MAT(R,j,i) = MAT(m,i,j);
     
+    return MATRIX_SUCCESS;
 }
