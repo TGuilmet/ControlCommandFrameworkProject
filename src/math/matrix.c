@@ -81,6 +81,7 @@ int matrix_set(matrix_t *m, size_t i, size_t j, double value){
 // Addition of matrices
 // R should always be different from A and B
 int matrix_add(matrix_t *R, const matrix_t *A, const matrix_t *B){
+    
 
 };
 
