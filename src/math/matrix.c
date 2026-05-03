@@ -1,4 +1,5 @@
 #include "math/matrix.h"
+#include "common.h"
 
 //Constructor
 int matrix_construct(matrix_t *m, size_t rows, size_t cols){
@@ -183,4 +184,21 @@ int matrix_transpose (matrix_t *R,const matrix_t *m){
             MAT(R,j,i) = MAT(m,i,j);
     
     return MATRIX_SUCCESS;
+}
+
+int matrix_compare(const matrix_t *A, const matrix_t *B){
+
+    if(A==NULL || B==NULL)
+        return MATRIX_ERROR;
+
+    if(A->rows != B->rows || A->cols != B->cols)
+        return MATRIX_ERROR;
+
+    for (size_t i = 0; i<(A->rows); i++)
+        for (size_t j = 0; j<(A->cols); j++)
+            if (MAT(A,i,j)!=MAT(B,i,j))
+                return FALSE;
+    
+    return TRUE;
+
 }

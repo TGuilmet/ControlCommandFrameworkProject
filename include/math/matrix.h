@@ -52,4 +52,5 @@ int matrix_multiply(matrix_t *R, const matrix_t *A, const matrix_t *B);
 // R should always be different from A
 int matrix_transpose(matrix_t *R, const matrix_t *m);
 
+int matrix_compare( const matrix_t *A, const matrix_t *B);
 #endif
