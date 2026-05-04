@@ -1,3 +1,9 @@
+#include "../include/common.h"
+
+#ifdef RUN_TESTS
+#include "../tests/test.h"
+#endif
+
 int main(int argc, char **argv)
 {
     printf("Running application...\n");

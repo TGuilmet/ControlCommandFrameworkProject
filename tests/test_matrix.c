@@ -21,9 +21,9 @@ int run_matrix_tests(){
     RUN_TEST(test_matrix_clone);
     RUN_TEST(test_matrix_add);
     RUN_TEST(test_matrix_scale);
-    // RUN_TEST(test_matrix_multiply);
-    // RUN_TEST(test_matrix_transpose);
-    // RUN_TEST(test_matrix_compare);
+    RUN_TEST(test_matrix_multiply);
+    RUN_TEST(test_matrix_transpose);
+    RUN_TEST(test_matrix_compare);
 
     return success ? 0 : 1;
 };
@@ -83,13 +83,16 @@ int test_matrix_get(){
     double val2 = 0.0;
     double val3 = 0.0;
 
-    int succes1 = matrix_get(&m, 0, 1, &val1);
-    int succes2 = matrix_get(&m, 4, 2, &val2);
-    int succes3 = matrix_get(&m, 0, 2+1, &val3);
+    if (matrix_get(&m, 0, 1, &val1)!=MATRIX_SUCCESS)
+        return 0;
+    if (matrix_get(&m, 4, 2, &val2)!=MATRIX_ERROR)
+        return 0;
+    if (matrix_get(&m, 0, 2+1, &val3)!=MATRIX_ERROR)
+        return 0;
 
     matrix_free(&m);
 
-    return (val1 == 3.14 && succes1 && val2 == 0.0 && !(succes2) && val3 == 0.0 && !(succes3));
+    return (fabs(val1-3.14)<EPS  && fabs(val2 - 0.0)<EPS && fabs(val3 - 0.0)<EPS);
 
 };
 
@@ -112,7 +115,7 @@ int test_matrix_macro(){
 
     matrix_free(&m1);matrix_free(&m2);
 
-    return (val1 == val2);
+    return (fabs(val1-val2)<EPS);
 };
 
 int test_matrix_set(){
@@ -126,7 +129,7 @@ int test_matrix_set(){
         return 0;
 
     double val = 0.0;
-    int get_succes = matrix_get(&m, 1, 1, &val);
+    int get_succes = (matrix_get(&m, 1, 1, &val)==MATRIX_SUCCESS);
 
     matrix_free(&m);
 
@@ -250,8 +253,8 @@ int test_matrix_multiply(){
     MAT(&m1, 0, 0) = 4.0; MAT(&m1, 0, 1) = 3.0;
     MAT(&m1, 1, 0) = 2.0; MAT(&m1, 1, 1) = 1.0;
 
-    MAT(&m1, 0, 0) = 1.0;
-    MAT(&m1, 1, 0) = 3.0; 
+    MAT(&m2, 0, 0) = 1.0;
+    MAT(&m2, 1, 0) = 3.0; 
 
     if (matrix_multiply(&R,&m1,&m2) != MATRIX_SUCCESS)
         return 0;
