@@ -28,6 +28,6 @@ int test_matrix_multiply();
 
 int test_matrix_transpose();
 
-int matrix_compare();
+int test_matrix_compare();
 
 #endif

@@ -17,6 +17,13 @@ int run_matrix_tests(){
     RUN_TEST(test_matrix_get);
     RUN_TEST(test_matrix_set);
     RUN_TEST(test_matrix_macro);
+    RUN_TEST(test_matrix_copy);
+    RUN_TEST(test_matrix_clone);
+    RUN_TEST(test_matrix_add);
+    RUN_TEST(test_matrix_scale);
+    // RUN_TEST(test_matrix_multiply);
+    // RUN_TEST(test_matrix_transpose);
+    // RUN_TEST(test_matrix_compare);
 
     return success ? 0 : 1;
 };
@@ -210,7 +217,6 @@ int test_matrix_add(){
 };
 
 int test_matrix_scale(){
-    return MATRIX_SUCCESS;
 
     matrix_t m1,m2;
 
@@ -220,22 +226,70 @@ int test_matrix_scale(){
     MAT(&m1, 0, 0) = 1.0; MAT(&m1, 0, 1) = 0.0;
     MAT(&m1, 1, 0) = 1.5; MAT(&m1, 1, 1) = 1.0;
 
+    matrix_scale(&m1,4.0);
+
     MAT(&m2, 0, 0) = 4.0; MAT(&m2, 0, 1) = 0.0;
     MAT(&m2, 1, 0) = 6.0; MAT(&m2, 1, 1) = 4.0;
 
     int result = matrix_compare(&m1,&m2);
 
-    matrix_free(&m1);matrix_free(&m1);
+    matrix_free(&m1);matrix_free(&m2);
 
     return result;
-
-
 };
 
 int test_matrix_multiply(){
-    return MATRIX_SUCCESS;
+    matrix_t m1,m2,m3,R;
+
+    matrix_construct(&m1,2,2);
+    matrix_construct(&m2,2,1);
+    matrix_construct(&R,1,1);
+    matrix_construct(&m3,2,1);
+
+    MAT(&m1, 0, 0) = 1.0;
+    MAT(&m1, 1, 0) = 3.0; 
+
+    MAT(&m2, 0, 0) = 4.0; MAT(&m2, 0, 1) = 3.0;
+    MAT(&m2, 1, 0) = 2.0; MAT(&m2, 1, 1) = 1.0;
+
+    if (matrix_multiply(&R,&m2,&m1) != MATRIX_SUCCESS)
+        return 0;
+
+    MAT(&m3, 0, 0) = 13.0;
+    MAT(&m3, 1, 0) = 5.0;
+
+    int result = matrix_compare(&m3,&R);
+
+    matrix_free(&m1);matrix_free(&m2);matrix_free(&m3);matrix_free(&R);
+
+    return result;
 };
 
 int test_matrix_transpose(){
-    return MATRIX_SUCCESS;
+
+    matrix_t m1,m2,R;
+
+    matrix_construct(&m1,2,3);
+    matrix_construct(&m2,3,2);
+    matrix_construct(&R,1,1);
+
+    MAT(&m1, 0, 0) = 1.1; MAT(&m1, 0, 1) = 1.2;MAT(&m1, 0, 2) = 1.3;
+    MAT(&m1, 1, 0) = 1.4; MAT(&m1, 1, 1) = 1.5;MAT(&m1, 1, 2) = 1.6;
+
+    if (matrix_transpose(&R,&m1) != MATRIX_SUCCESS)
+        return 0;
+
+    MAT(&m2, 0, 0) = 1.1; MAT(&m2, 0, 1) = 1.4;
+    MAT(&m2, 1, 0) = 1.2; MAT(&m2, 1, 1) = 1.5;
+    MAT(&m2, 2, 0) = 1.3; MAT(&m2, 2, 1) = 1.6;
+
+    int result = matrix_compare(&R,&m2);
+
+    matrix_free(&m1);matrix_free(&m2);matrix_free(&R);
+
+    return result;
 };
+
+int test_matrix_compare(){
+    
+}

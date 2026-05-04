@@ -48,7 +48,7 @@ int matrix_scale(matrix_t *m, double k);
 // R should always be different from A and B
 int matrix_multiply(matrix_t *R, const matrix_t *A, const matrix_t *B);
 
-// Transpose a matrix
+// Transpose a matrix with reallocation
 // R should always be different from A
 int matrix_transpose(matrix_t *R, const matrix_t *m);
 
