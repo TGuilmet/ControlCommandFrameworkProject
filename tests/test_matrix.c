@@ -295,5 +295,21 @@ int test_matrix_transpose(){
 };
 
 int test_matrix_compare(){
-    
+    matrix_t m1, m2;
+
+    matrix_construct(&m1,2,2);
+    matrix_construct(&m2,2,2);
+
+    MAT(&m1,0,0)=1.0;
+    MAT(&m2,0,0)=1.0;
+
+    int ok1 = matrix_compare(&m1,&m2);
+
+    MAT(&m2,0,0)=1.1;
+    int ok2 = matrix_compare(&m1,&m2);
+
+    matrix_free(&m1);
+    matrix_free(&m2);
+
+    return (ok1 == TRUE && ok2 == FALSE);
 }
