@@ -193,6 +193,7 @@ int test_matrix_add(){
     matrix_construct(&m2,2,2);
     matrix_construct(&m3,2,2);
     matrix_construct(&m4,3,3);
+    matrix_construct(&R,1,1);
 
 
     MAT(&m1, 0, 0) = 1.0; MAT(&m1, 0, 1) = 1.0;
@@ -246,13 +247,13 @@ int test_matrix_multiply(){
     matrix_construct(&R,1,1);
     matrix_construct(&m3,2,1);
 
+    MAT(&m1, 0, 0) = 4.0; MAT(&m1, 0, 1) = 3.0;
+    MAT(&m1, 1, 0) = 2.0; MAT(&m1, 1, 1) = 1.0;
+
     MAT(&m1, 0, 0) = 1.0;
     MAT(&m1, 1, 0) = 3.0; 
 
-    MAT(&m2, 0, 0) = 4.0; MAT(&m2, 0, 1) = 3.0;
-    MAT(&m2, 1, 0) = 2.0; MAT(&m2, 1, 1) = 1.0;
-
-    if (matrix_multiply(&R,&m2,&m1) != MATRIX_SUCCESS)
+    if (matrix_multiply(&R,&m1,&m2) != MATRIX_SUCCESS)
         return 0;
 
     MAT(&m3, 0, 0) = 13.0;

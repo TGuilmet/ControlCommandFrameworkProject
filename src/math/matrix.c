@@ -139,7 +139,7 @@ int matrix_add(matrix_t *R, const matrix_t *A, const matrix_t *B){
 // Multiply by a scalar
 int matrix_scale(matrix_t *m, double k){
 
-    if(m==NULL)
+    if(m==NULL || m->data == NULL)
         return MATRIX_ERROR;
     
     for (size_t i=0; i<(m->rows); i++)
@@ -156,7 +156,10 @@ int matrix_multiply(matrix_t *R, const matrix_t *A, const matrix_t *B){
     if(R==NULL || A==NULL || B==NULL)
         return MATRIX_ERROR;
 
-    
+    if(R == A || R == B)
+        return MATRIX_ERROR;
+
+
     if (A->cols != B->rows)
         return MATRIX_ERROR;
 
@@ -167,10 +170,13 @@ int matrix_multiply(matrix_t *R, const matrix_t *A, const matrix_t *B){
     if (R->data == NULL)
         return MATRIX_ERROR;
 
+    R->rows = A->rows;
+    R->cols = B->cols;
+
     for (size_t i=0; i<(A->rows); i++)
-        for(size_t j=0; j<(B->cols); j++)
-            // R(i,j term)
-                for(size_t k=0; k<(A->cols); k++)
+        for(size_t k=0; k<(A->cols); k++)
+            for(size_t j=0; j<(B->cols); j++)
+                // R(i,j term)          
                 MAT(R,i,j)+= MAT(A,i,k)*MAT(B,k,j);
     
     return MATRIX_SUCCESS;
@@ -183,7 +189,7 @@ int matrix_transpose (matrix_t *R,const matrix_t *m){
 
     free(R->data);
 
-    R->data = malloc(R->cols * R->rows * sizeof(double));
+    R->data = malloc(m->cols * m->rows * sizeof(double));
 
     if (R->data == NULL)
         return MATRIX_ERROR;
